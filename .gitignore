@@ -1,0 +1,7 @@
+/package-lock.json
+/node_modules
+/bin/app.properties
+/bin/app.log
+/app.log
+/app.properties
+.DS_Store

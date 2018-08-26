@@ -1,0 +1,31 @@
+# contents of properties file
+[db]
+hostname = postgresql.host.com
+port = 5432
+name = dbname
+dialect = postgres
+username = dbuser
+password = dbpass
+
+[app]
+hostname = localhost
+port = 8080
+sessionSecret = secret
+memcachedHost = 127.0.0.1:11211
+memcachedSecret = secret
+https = false
+serverkey =
+servercert =
+url = http://localhost:8080
+
+[log]
+file = app.log
+level = error
+
+[smtp]
+username = smtpUsername
+password = smtpPassword
+hostname = smtpHostname
+port = 465
+ssl = true
+tls = false
