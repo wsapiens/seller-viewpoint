@@ -1,19 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Product = sequelize.define('Product', {
-
-    /*
-
-name
-description
-companyId
-
-buyOrderUnitPrice
-sellUnitPrice
-addon
-addonToProductId
-    */
-
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     height: DataTypes.STRING,

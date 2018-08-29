@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     lastname: DataTypes.STRING,
     phone: DataTypes.STRING,
     isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
-    isManager: { type: DataTypes.BOOLEAN, defaultValue: false },
     companyId: {
       type: DataTypes.INTEGER,
       references: 'organization', // <<< Note, its table's name, not object name
