@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Company = sequelize.define('Company', {
+  var Organization = sequelize.define('Organization', {
     name: DataTypes.STRING,
     phone: DataTypes.STRING
   },
@@ -14,14 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     // transform all passed model names (first parameter of define) into plural.
     // if you don't want that, set the following
     freezeTableName: true,
-    tableName: 'company'
+    tableName: 'organization'
   });
 
-  Company.associate = function(models) {
-    models.Company.hasMany(models.Property, { foreignKey: 'company_id' });
-    models.Company.hasMany(models.User, { foreignKey: 'company_id' });
-    models.Company.hasMany(models.Tenant, { foreignKey: 'company_id' });
+  Organization.associate = function(models) {
+    models.Organization.hasMany(models.Product, { foreignKey: 'organizationId' });
+    models.Organization.hasMany(models.User, { foreignKey: 'organizationId' });
   };
 
-  return Company;
+  return Organization;
 };

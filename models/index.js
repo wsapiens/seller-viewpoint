@@ -1,36 +1,21 @@
 'use strict';
 
-const fs        = require('fs');
-const path      = require('path');
-const config    = require('../config');
-const Sequelize = require('sequelize');
-const cls = require('continuation-local-storage');
-var namespace = cls.createNamespace('seller-viewpoint-namespace');
-Sequelize.useCLS(namespace);
-
-var db        = {};
+var fs        = require('fs');
+var path      = require('path');
+var Sequelize = require('sequelize');
 var basename  = path.basename(__filename);
-var sequelize = new Sequelize(config.get('db.name'),
-                                config.get('db.username'),
-                                config.get('db.password'), {
-  host: config.get('db.hostname'),
-  dialect: config.get('db.dialect'),
+var env       = process.env.NODE_ENV || 'development';
+var config    = require(__dirname + '/../config/config.json')[env];
+var db        = {};
 
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
+if (config.use_env_variable) {
+  var sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
-  // SQLite only
-  //storage: 'path/to/database.sqlite',
-
-  // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
-  operatorsAliases: false
-});
-
-fs.readdirSync(__dirname)
+fs
+  .readdirSync(__dirname)
   .filter(file => {
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
