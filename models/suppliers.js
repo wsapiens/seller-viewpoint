@@ -1,19 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var User= sequelize.define('User', {
-    email: { type: DataTypes.STRING, allowNull: false, unique: true },
-    password: { type: DataTypes.STRING, allowNull: false },
-    firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
-    companyId: {
+  var Suppliers = sequelize.define('Suppliers', {
+    name: DataTypes.STRING,
+    description: DataTypes.STRING,
+    location: DataTypes.STRING,
+    contact: DataTypes.STRING,
+    country: DataTypes.STRING,
+    organizationId: {
       type: DataTypes.INTEGER,
-      references: 'organization', // <<< Note, its table's name, not object name
+      references: 'organizations', // <<< Note, its table's name, not object name
       referencesKey: 'id' // <<< Note, its a column name
     }
-  },
-  {
+  }, {
     // don't add the timestamp attributes (updatedAt, createdAt)
     timestamps: true,
     // don't use camelcase for automatically added attributes but underscore style
@@ -23,15 +21,14 @@ module.exports = (sequelize, DataTypes) => {
     // transform all passed model names (first parameter of define) into plural.
     // if you don't want that, set the following
     freezeTableName: true,
-    tableName: 'users'
+    tableName: 'suppliers'
   });
-
-  User.associate = function (models) {
-    models.User.belongsTo(models.Organization, {
+  Suppliers.associate = function(models) {
+    models.Suppliers.belongsTo(models.Organizations, {
       onDelete: 'CASCADE',
       foreignKey: 'organizationId'
     });
+    models.Suppliers.hasMany(models.Purchases, { foreignKey: 'supplierId' });
   };
-
-  return User;
+  return Suppliers;
 };

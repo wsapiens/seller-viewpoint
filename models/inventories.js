@@ -1,29 +1,18 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Product = sequelize.define('Product', {
-    name: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    height: DataTypes.STRING,
-    width: DataTypes.STRING,
-    length: DataTypes.STRING,
-    weight: DataTypes.STRING,
-    upc: DataTypes.STRING,
-
-    buyUnitPrice: DataTypes.DECIMAL(10, 2),
-    sellUnitPrice: DataTypes.DECIMAL(10, 2),
-    addOn: DataTypes.BOOLEAN,
-    addOnToProductId: {
-      type: DataTypes.INTEGER,
-      references: 'product',
-      referencesKey: 'id'
-    },
+  var Inventories = sequelize.define('Inventories', {
+    quantity: DataTypes.INTEGER,
     organizationId: {
       type: DataTypes.INTEGER,
-      references: 'organization', // <<< Note, its table's name, not object name
+      references: 'organizations', // <<< Note, its table's name, not object name
+      referencesKey: 'id' // <<< Note, its a column name
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      references: 'products', // <<< Note, its table's name, not object name
       referencesKey: 'id' // <<< Note, its a column name
     }
-  },
-  {
+  }, {
     // don't add the timestamp attributes (updatedAt, createdAt)
     timestamps: true,
     // don't use camelcase for automatically added attributes but underscore style
@@ -33,16 +22,19 @@ module.exports = (sequelize, DataTypes) => {
     // transform all passed model names (first parameter of define) into plural.
     // if you don't want that, set the following
     freezeTableName: true,
-    tableName: 'product'
+    tableName: 'inventories'
   });
-
-  Product.associate = function (models) {
-    models.Product.belongsTo(models.Organization, {
+  Inventories.associate = function(models) {
+    models.Expenses.belongsTo(models.Organizations, {
       onDelete: 'CASCADE',
       foreignKey: 'organizationId',
       targetKey: 'id'
     });
+    models.Expenses.belongsTo(models.Products, {
+      onDelete: 'CASCADE',
+      foreignKey: 'productId',
+      targetKey: 'id'
+    });
   };
-
-  return Product;
+  return Inventories;
 };
