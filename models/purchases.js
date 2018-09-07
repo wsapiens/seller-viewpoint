@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     shippingCost: DataTypes.DECIMAL(10, 2),
     miscCost: DataTypes.DECIMAL(10, 2),
     totalCost: DataTypes.DECIMA(10, 2),
+    description: DataTypes.STRING,
     organizationId: {
       type: DataTypes.INTEGER,
       references: 'organizations', // <<< Note, its table's name, not object name

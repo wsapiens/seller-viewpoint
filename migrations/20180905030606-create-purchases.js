@@ -35,6 +35,9 @@ module.exports = {
       totalCost: {
         type: Sequelize.DECIMAL(10, 2)
       },
+      description: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
