@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Products', {
+    return queryInterface.createTable('products', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -29,29 +29,30 @@ module.exports = {
       upc: {
         type: Sequelize.STRING
       },
-      unitPrice: {
+      unit_price: {
         type: Sequelize.DECIMAL(10, 2)
       },
-      addOn: {
+      add_on: {
         type: Sequelize.BOOLEAN
       },
-      addOnToProductId: {
+      add_on_to_product_id: {
         type: Sequelize.INTEGER
       },
-      organizationId: {
+      organization_id: {
         type: Sequelize.INTEGER
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('NOW()')
       },
-      updatedAt: {
-        allowNull: false,
+      updated_at: {
+        allowNull: true,
         type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Products');
+    return queryInterface.dropTable('products');
   }
 };

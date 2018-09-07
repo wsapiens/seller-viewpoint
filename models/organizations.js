@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   },
   {
     // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false,
+    timestamps: true,
     // don't use camelcase for automatically added attributes but underscore style
     // so updatedAt will be updated_at
     underscored: true,
@@ -18,13 +18,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Organizations.associate = function(models) {
-    models.Organizations.hasMany(models.Products, { foreignKey: 'organizationId' });
-    models.Organizations.hasMany(models.Users, { foreignKey: 'organizationId' });
-    models.Organizations.hasMany(models.Suppliers, { foreignKey: 'organizationId' });
-    models.Organizations.hasMany(models.Purchases, { foreignKey: 'organizationId' });
-    models.Organizations.hasMany(models.Orders, { foreignKey: 'organizationId' });
-    models.Organizations.hasMany(models.Expenses, { foreignKey: 'organizationId' });
-    models.Organizations.hasMany(models.Inventories, { foreignKey: 'organizationId' });
+    models.Organizations.hasMany(models.Products, { foreignKey: 'organization_id' });
+    models.Organizations.hasMany(models.Users, { foreignKey: 'organization_id' });
+    models.Organizations.hasMany(models.Suppliers, { foreignKey: 'organization_id' });
+    models.Organizations.hasMany(models.Purchases, { foreignKey: 'organization_id' });
+    models.Organizations.hasMany(models.Orders, { foreignKey: 'organization_id' });
+    models.Organizations.hasMany(models.Expenses, { foreignKey: 'organization_id' });
+    models.Organizations.hasMany(models.Inventories, { foreignKey: 'organization_id' });
   };
 
   return Organizations;

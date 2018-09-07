@@ -1,14 +1,14 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Orders = sequelize.define('Orders', {
-    shippingCost: DataTypes.DECIMAL(10, 2),
+    shipping_cost: DataTypes.DECIMAL(10, 2),
     cancel: DataTypes.BOOLEAN,
-    organizationId: {
+    organization_id: {
       type: DataTypes.INTEGER,
       references: 'organizations', // <<< Note, its table's name, not object name
       referencesKey: 'id' // <<< Note, its a column name
     },
-    customerId: {
+    customer_id: {
       type: DataTypes.INTEGER,
       references: 'customers', // <<< Note, its table's name, not object name
       referencesKey: 'id' // <<< Note, its a column name
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     // don't use camelcase for automatically added attributes but underscore style
     // so updatedAt will be updated_at
-    underscored: false,
+    underscored: true,
     // disable the modification of tablenames; By default, sequelize will automatically
     // transform all passed model names (first parameter of define) into plural.
     // if you don't want that, set the following
@@ -28,15 +28,15 @@ module.exports = (sequelize, DataTypes) => {
   Orders.associate = function(models) {
     models.Orders.belongsTo(models.Organizations, {
       onDelete: 'CASCADE',
-      foreignKey: 'organizationId',
+      foreignKey: 'organization_id',
       targetKey: 'id'
     });
     models.Orders.belongsTo(models.Customers, {
       onDelete: 'CASCADE',
-      foreignKey: 'customerId',
+      foreignKey: 'customer_id',
       targetKey: 'id'
     });
-    models.Orders.hasMany(models.OrderDetails, { foreignKey: 'orderId' });
+    models.Orders.hasMany(models.OrderDetails, { foreignKey: 'order_id' });
   };
   return Orders;
 };

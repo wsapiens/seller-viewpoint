@@ -2,23 +2,23 @@
 module.exports = (sequelize, DataTypes) => {
   var Purchases = sequelize.define('Purchases', {
     quantity: DataTypes.INTEGER,
-    unitPrice: DataTypes.DECIMAL(10, 2),
-    orderCost: DataTypes.DECIMAL(10, 2),
-    shippingCost: DataTypes.DECIMAL(10, 2),
-    miscCost: DataTypes.DECIMAL(10, 2),
-    totalCost: DataTypes.DECIMA(10, 2),
+    unit_price: DataTypes.DECIMAL(10, 2),
+    order_cost: DataTypes.DECIMAL(10, 2),
+    shipping_cost: DataTypes.DECIMAL(10, 2),
+    misc_cost: DataTypes.DECIMAL(10, 2),
+    total_cost: DataTypes.DECIMA(10, 2),
     description: DataTypes.STRING,
-    organizationId: {
+    organization_id: {
       type: DataTypes.INTEGER,
       references: 'organizations', // <<< Note, its table's name, not object name
       referencesKey: 'id' // <<< Note, its a column name
     },
-    supplierId: {
+    supplier_id: {
       type: DataTypes.INTEGER,
       references: 'suppliers', // <<< Note, its table's name, not object name
       referencesKey: 'id' // <<< Note, its a column name
     },
-    productId: {
+    product_id: {
       type: DataTypes.INTEGER,
       references: 'products', // <<< Note, its table's name, not object name
       referencesKey: 'id' // <<< Note, its a column name
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     // don't use camelcase for automatically added attributes but underscore style
     // so updatedAt will be updated_at
-    underscored: false,
+    underscored: true,
     // disable the modification of tablenames; By default, sequelize will automatically
     // transform all passed model names (first parameter of define) into plural.
     // if you don't want that, set the following
@@ -38,17 +38,17 @@ module.exports = (sequelize, DataTypes) => {
   Purchases.associate = function(models) {
     models.Purchases.belongsTo(models.Organizations, {
       onDelete: 'CASCADE',
-      foreignKey: 'organizationId',
+      foreignKey: 'organization_id',
       targetKey: 'id'
     });
     models.Purchases.belongsTo(models.Suppliers, {
       onDelete: 'CASCADE',
-      foreignKey: 'supplierId',
+      foreignKey: 'supplier_id',
       targetKey: 'id'
     });
     models.Purchases.belongsTo(models.Products, {
       onDelete: 'CASCADE',
-      foreignKey: 'productId',
+      foreignKey: 'product_id',
       targetKey: 'id'
     });
   };

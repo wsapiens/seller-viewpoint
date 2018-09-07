@@ -1,54 +1,55 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Purchases', {
+    return queryInterface.createTable('purchases', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      organizationId: {
+      organization_id: {
         type: Sequelize.INTEGER
       },
-      supplierId: {
+      supplier_id: {
         type: Sequelize.INTEGER
       },
-      productId: {
+      product_id: {
         type: Sequelize.INTEGER
       },
       quantity: {
         type: Sequelize.INTEGER
       },
-      unitPrice: {
+      unit_price: {
         type: Sequelize.DECIMAL(10, 2)
       },
-      orderCost: {
+      order_cost: {
         type: Sequelize.DECIMAL(10, 2)
       },
-      shippingCost: {
+      shipping_cost: {
         type: Sequelize.DECIMAL(10, 2)
       },
-      miscCost: {
+      misc_cost: {
         type: Sequelize.DECIMAL(10, 2)
       },
-      totalCost: {
+      total_cost: {
         type: Sequelize.DECIMAL(10, 2)
       },
       description: {
         type: Sequelize.STRING
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('NOW()')
       },
-      updatedAt: {
-        allowNull: false,
+      updated_at: {
+        allowNull: true,
         type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Purchases');
+    return queryInterface.dropTable('purchases');
   }
 };

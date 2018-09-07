@@ -8,14 +8,14 @@ module.exports = (sequelize, DataTypes) => {
     length: DataTypes.STRING,
     weight: DataTypes.STRING,
     upc: DataTypes.STRING,
-    unitPrice: DataTypes.DECIMAL(10, 2),
-    addOn: DataTypes.BOOLEAN,
-    addOnToProductId: {
+    unit_price: DataTypes.DECIMAL(10, 2),
+    add_on: DataTypes.BOOLEAN,
+    add_on_to_product_id: {
       type: DataTypes.INTEGER,
       references: 'products',
       referencesKey: 'id'
     },
-    organizationId: {
+    organization_id: {
       type: DataTypes.INTEGER,
       references: 'organizations', // <<< Note, its table's name, not object name
       referencesKey: 'id' // <<< Note, its a column name
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     // don't use camelcase for automatically added attributes but underscore style
     // so updatedAt will be updated_at
-    underscored: false,
+    underscored: true,
     // disable the modification of tablenames; By default, sequelize will automatically
     // transform all passed model names (first parameter of define) into plural.
     // if you don't want that, set the following
@@ -37,13 +37,13 @@ module.exports = (sequelize, DataTypes) => {
   Products.associate = function (models) {
     models.Products.belongsTo(models.Organizations, {
       onDelete: 'CASCADE',
-      foreignKey: 'organizationId',
+      foreignKey: 'organization_id',
       targetKey: 'id'
     });
-    models.Products.hasMany(models.Purchases, { foreignKey: 'productId' });
-    models.Products.hasMany(models.OrderDetails, { foreignKey: 'productId' });
-    models.Products.hasMany(models.Expenses, { foreignKey: 'productId' });
-    models.Products.hasMany(models.Inventories, { foreignKey: 'productId' });
+    models.Products.hasMany(models.Purchases, { foreignKey: 'product_id' });
+    models.Products.hasMany(models.OrderDetails, { foreignKey: 'product_id' });
+    models.Products.hasMany(models.Expenses, { foreignKey: 'product_id' });
+    models.Products.hasMany(models.Inventories, { foreignKey: 'product_id' });
   };
 
   return Products;

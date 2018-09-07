@@ -1,17 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('OrderDetails', {
+    return queryInterface.createTable('order_details', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      orderId: {
+      order_id: {
         type: Sequelize.INTEGER
       },
-      productId: {
+      product_id: {
         type: Sequelize.INTEGER
       },
       quantity: {
@@ -29,17 +29,18 @@ module.exports = {
       refund: {
         type: Sequelize.BOOLEAN
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('NOW()')
       },
-      updatedAt: {
-        allowNull: false,
+      updated_at: {
+        allowNull: true,
         type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('OrderDetails');
+    return queryInterface.dropTable('order_details');
   }
 };
