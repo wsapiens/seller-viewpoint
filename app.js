@@ -14,17 +14,7 @@ const models = require('./models');
 const config = require('./config');
 
 var indexRouter = require('./routes/index');
-var managerRouter = require('./routes/manager');
-var expensesRouter = require('./routes/expenses');
-var typesRouter = require('./routes/types');
-var propertiesRouter = require('./routes/properties');
-var unitsRouter = require('./routes/units');
-var fileRouter = require('./routes/file');
 var userRouter = require('./routes/users');
-var tenantRouter = require('./routes/tenants');
-var importRouter = require('./routes/import');
-var workRouter = require('./routes/works');
-var vendorRouter = require('./routes/vendors');
 
 var app = express();
 
@@ -74,7 +64,7 @@ passport.serializeUser(function(user, cb) {
 });
 
 passport.deserializeUser(function(id, cb) {
-  models.User
+  models.Users
         .findById(id)
         .then(user => {
           cb(null, user);
@@ -90,7 +80,7 @@ passport.use(new LocalStrategy({
   },
   function(req, username, password, done) {
     models.sequelize
-          .query('SELECT id, company_id, email, firstname, phone, is_admin, is_manager FROM login_user WHERE email=$1 AND password = crypt($2, password)',
+          .query('SELECT id, organization_id, email, firstname, phone, is_admin FROM users WHERE email=$1 AND password = crypt($2, password)',
           {
             bind: [
               username,
@@ -115,17 +105,7 @@ app.use(ipfilter(ips));
 // app.use(ipfilter(ips, {mode: 'allow'}));
 
 app.use('/', indexRouter);
-app.use('/manager', managerRouter);
-app.use('/expenses', expensesRouter);
-app.use('/types', typesRouter);
-app.use('/properties', propertiesRouter);
-app.use('/units', unitsRouter);
-app.use('/file', fileRouter);
 app.use('/users', userRouter);
-app.use('/tenants', tenantRouter);
-app.use('/import', importRouter);
-app.use('/works', workRouter);
-app.use('/vendors', vendorRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

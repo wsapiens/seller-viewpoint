@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
     return res.render('login', { message: req.flash('errorMessage') });
   }
   res.render('index', {
-    manager: req.user.is_manager,
+    admin: req.user.is_admin,
     version: pjson.version,
     message: ''
   });
@@ -43,7 +43,7 @@ router.get('/password', function(req, res, next) {
   if(!req.isAuthenticated()) {
     return res.render('login', { message: '' });
   }
-  res.render('index', {  manager: req.user.is_manager, message: ''});
+  res.render('index', {  admin: req.user.is_admin, message: ''});
 });
 
 router.post('/password', function(req, res, next) {
@@ -53,7 +53,7 @@ router.post('/password', function(req, res, next) {
   models.sequelize
         .transaction(function (t) {
     models.sequelize
-          .query('SELECT * FROM login_user WHERE id=$1 AND password = crypt($2, password)',
+          .query('SELECT * FROM users WHERE id=$1 AND password = crypt($2, password)',
           {
             bind: [
               req.user.id,
@@ -65,7 +65,7 @@ router.post('/password', function(req, res, next) {
               console.log('old password is verified');
               log.debug('old password is verified');
               models.sequelize
-                    .query("UPDATE login_user SET password = crypt($2, gen_salt('bf')) WHERE id=$1",
+                    .query("UPDATE users SET password = crypt($2, gen_salt('bf')) WHERE id=$1",
                     {
                       bind: [
                         req.user.id,
@@ -76,11 +76,11 @@ router.post('/password', function(req, res, next) {
                     .then(function() {
                       log.info('password has been changed for user id: ' + req.user.id);
                     });
-            return res.render('index', { manager: req.user.is_manager, message: ''});
+            return res.render('index', { admin: req.user.is_admin, message: ''});
         }
         console.log('old password verification fail for user id: ' + req.user.id);
         log.info('old password verification fail for user id: ' + req.user.id);
-        res.render('index', { manager: req.user.is_manager, message: 'password change failed'});
+        res.render('index', { admin: req.user.is_admin, message: 'password change failed'});
       });
   });
 });
@@ -119,11 +119,11 @@ router.post('/subscribe', function(req, res, next) {
             if(user) {
               return res.render('subscribe', { message: '', error_message: 'The email is already registered!'});
             }
-            models.Company
+            models.Organization
                   .create({
                     name: req.body.email
-                  }).then(company => {
-                    var company_id = company.id;
+                  }).then(organization => {
+                    var organization_id = organiation.id;
                     var random_password = cryptoRandomString(5);
                     var message	= {
                       text:	'Your Account has been created with your email: '
@@ -131,10 +131,10 @@ router.post('/subscribe', function(req, res, next) {
                             + ' and temporary password: '
                             + random_password
                             + ', please change password after login ' + config.get('app.url'),
-                            from:	'SPARK REM <' + config.get('smtp.username') + '>',
+                            from:	'Seller Viewpoint <' + config.get('smtp.username') + '>',
                             to:		' <' + req.body.email +'>',
                             //cc:		"else <else@your-email.com>",
-                            subject:	'SPARK Property Manager APP Account Creation',
+                            subject:	'Seller Viewpoint APP Account Creation',
                             // attachment:
                             // [
                             //    {data:"<html>i <i>hope</i> this works!</html>", alternative:true},
@@ -142,13 +142,13 @@ router.post('/subscribe', function(req, res, next) {
                             // ]
                           };
                     models.sequelize
-                          .query("INSERT INTO login_user (email, password, is_manager, company_id) VALUES ($1, crypt($2, gen_salt('bf')), $3, $4)",
+                          .query("INSERT INTO users (email, password, is_admin, organization_id) VALUES ($1, crypt($2, gen_salt('bf')), $3, $4)",
                           {
                             bind: [
                               req.body.email,
                               random_password,
                               true,
-                              company_id
+                              organization_id
                             ],
                             type: models.sequelize.QueryTypes.INSERT
                           })

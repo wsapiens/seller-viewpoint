@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     order_cost: DataTypes.DECIMAL(10, 2),
     shipping_cost: DataTypes.DECIMAL(10, 2),
     misc_cost: DataTypes.DECIMAL(10, 2),
-    total_cost: DataTypes.DECIMA(10, 2),
+    total_cost: DataTypes.DECIMAL(10, 2),
     description: DataTypes.STRING,
     organization_id: {
       type: DataTypes.INTEGER,

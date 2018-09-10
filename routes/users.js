@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
   }
   models.User.findAll({
     where: {
-      company_id: req.user.company_id
+      organization_id: req.user.organization_id
     }
   }).then(users => {
     res.setHeader('Content-Type', 'application/json');
@@ -47,10 +47,10 @@ router.post('/', csrfProtection, function(req, res, next) {
           + ' and temporary password: '
           + random_password
           + ', please change password after login ' + config.get('app.url'),
-   from:	'SPARK REM <' + config.get('smtp.username') + '>',
+   from:	'Seller Viewpoint <' + config.get('smtp.username') + '>',
    to:		req.body.firstname + ' <' + req.body.email +'>',
    //cc:		"else <else@your-email.com>",
-   subject:	'SPARK Property Manager App Account Creation',
+   subject:	'Seller Viewpoint App Account Creation',
    // attachment:
    // [
    //    {data:"<html>i <i>hope</i> this works!</html>", alternative:true},
@@ -58,7 +58,7 @@ router.post('/', csrfProtection, function(req, res, next) {
    // ]
   };
   models.sequelize
-        .query("INSERT INTO login_user(email, password, firstname, lastname, phone, is_manager, company_id)"
+        .query("INSERT INTO users(email, password, firstname, lastname, phone, is_admin, organization_id)"
              + " VALUES ($1, crypt($2, gen_salt('bf')), $3, $4, $5, $6, $7)",
             { bind: [
                 req.body.email,
@@ -66,8 +66,8 @@ router.post('/', csrfProtection, function(req, res, next) {
                 req.body.firstname,
                 req.body.lastname,
                 req.body.phone,
-                req.body.is_manager,
-                req.user.company_id
+                req.body.is_admin,
+                req.user.oranization_id
               ],
               type: models.sequelize.QueryTypes.INSERT
             })
@@ -91,7 +91,7 @@ router.put('/:userId', csrfProtection, function(req, res, next) {
    from:	'SPARK PM <' + config.get('smtp.username') + '>',
    to:		req.body.firstname + ' <' + req.body.email +'>',
    //cc:		"else <else@your-email.com>",
-   subject:	'SPARK Property Manager App Account Update',
+   subject:	'Seller Viewpoint App Account Update',
    // attachment:
    // [
    //    {data:"<html>i <i>hope</i> this works!</html>", alternative:true},
@@ -99,7 +99,7 @@ router.put('/:userId', csrfProtection, function(req, res, next) {
    // ]
   };
   models.sequelize
-        .query("UPDATE login_user SET email=$1, password=crypt($2, gen_salt('bf')), firstname=$3, lastname=$4, phone=$5, is_manager=$6 WHERE id=$7",
+        .query("UPDATE users SET email=$1, password=crypt($2, gen_salt('bf')), firstname=$3, lastname=$4, phone=$5, is_admin=$6 WHERE id=$7",
           {
             bind: [
               req.body.email,
@@ -107,7 +107,7 @@ router.put('/:userId', csrfProtection, function(req, res, next) {
               req.body.firstname,
               req.body.lastname,
               req.body.phone,
-              req.body.is_manager,
+              req.body.is_admin,
               req.params.userId
             ],
             type: models.sequelize.QueryTypes.UPDATE
