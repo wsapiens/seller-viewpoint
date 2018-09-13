@@ -2,8 +2,8 @@ var React = require('react');
 
 class LoginView extends React.Component {
   render() {
-    // return <div>Hello {this.props.name}</div>;
-    return (<div class="container">
+    return (
+      <div class="container">
         <h1>Sign In</h1>
         <form method="post" action="/login">
           <p>
@@ -22,7 +22,8 @@ class LoginView extends React.Component {
           <p><font color="red">{this.props.message}</font></p>
         </div>
         <a href="/subscribe">Create Account For your company</a>
-      </div>);
+      </div>
+    );
   }
 }
 
