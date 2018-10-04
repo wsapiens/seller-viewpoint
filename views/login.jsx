@@ -1,5 +1,11 @@
 var React = require('react');
 
+const styles = {
+  button: {
+    textAlign: 'center',
+  }
+}
+
 class LoginView extends React.Component {
   render() {
     return (
@@ -15,7 +21,7 @@ class LoginView extends React.Component {
             <input type="password" name="password" />
           </p>
           <p>
-            <input type="submit" value="Login" />
+            <input type="submit" value="Login" style={styles.button}/>
           </p>
         </form>
         <div align="center">
