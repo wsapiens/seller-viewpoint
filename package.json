@@ -21,10 +21,10 @@
     "crypto-random-string": "^1.0.0",
     "csurf": "^1.9.0",
     "debug": "~2.6.9",
+    "ejs": "^2.6.1",
     "emailjs": "^2.1.0",
     "express": "^4.15.4",
     "express-ipfilter": "^0.3.1",
-    "express-react-views": "^0.10.5",
     "express-session": "^1.15.6",
     "fast-csv": "^2.4.1",
     "fs": "0.0.1-security",
@@ -40,13 +40,8 @@
     "pg": "7.4.1",
     "pg-hstore": "^2.3.2",
     "properties-reader": "0.0.16",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
-    "react-router-dom": "^4.3.1",
-    "react-script": "^2.0.5",
     "sequelize": "^4.38.0",
-    "sequelize-cli": "^4.0.0",
-    "styled-components": "^3.4.9"
+    "sequelize-cli": "^4.0.0"
   },
   "repository": {
     "type": "git",
@@ -81,20 +76,11 @@
     "emailjs",
     "log4js",
     "ejs",
+    "reactjs",
     "csurf",
     "mocha",
     "grunt",
     "jshint"
   ],
-  "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-styled-components": "^1.8.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2"
-  }
+  "devDependencies": {}
 }
