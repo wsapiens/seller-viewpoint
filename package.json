@@ -5,7 +5,6 @@
   "main": "./bin/server.js",
   "scripts": {
     "test": "mocha",
-    "build": "webpack --mode production",
     "start": "node ./bin/cluster.js"
   },
   "author": "Steve Park",

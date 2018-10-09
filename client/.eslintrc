@@ -1,0 +1,9 @@
+{
+  esversion: 6,
+  laxbreak: true,
+  node: true,
+  asi: true,
+  laxcomma: true,
+  strict: false,
+  esnext: true
+}
